@@ -10,9 +10,9 @@ export declare class LicenseManager extends BeanStub {
     getLicenseDetails(licenseKey: string): {
         licenseKey: string;
         valid: boolean;
-        expiry: string | null;
+        expiry: string;
         version: string;
-        isTrial: boolean | null;
+        isTrial: boolean;
     };
     isDisplayWatermark(): boolean;
     getWatermarkMessage(): string;

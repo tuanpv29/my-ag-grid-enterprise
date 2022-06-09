@@ -63,12 +63,6 @@
             box-shadow: ag-param(input-focus-box-shadow);
             @include ag-color-property(border-color, input-focus-border-color);
         }
-
-        &:invalid {
-            border-width: 2px;
-            border-style: solid;
-            @include ag-color-property(border-color, input-border-color-invalid);
-        }
     }
 
     input[class^='ag-'][type='number'] {
@@ -112,10 +106,6 @@
     .ag-list-item {
         display: flex;
         align-items: center;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-
         &.ag-active-item {
             @include ag-color-property(background-color, row-hover-color);
         }
@@ -214,8 +204,7 @@
     }
 
     .ag-cell-wrapper > *:not(.ag-cell-value):not(.ag-group-value) {
-        // Needed to capitalize min, because it clashes with old versions of Sass
-        height: Min(var(--ag-line-height, ag-param(row-height) - 2px), ag-param(row-height) - 2px);
+        height: ag-param(row-height) - 2px; // - 2px to remove effect of cell borders
         display: flex;
         align-items: center;
         flex: none;
@@ -250,7 +239,7 @@
     }
 
     .group-item {
-        margin: ag-param(grid-size) * 0.5 0;
+        margin: ag-param(grid-size) / 2 0;
     }
 
     .ag-label {
@@ -259,7 +248,7 @@
     }
 
     .ag-label-align-top .ag-label {
-        margin-bottom: ag-param(grid-size) * 0.5;
+        margin-bottom: ag-param(grid-size) / 2;
     }
 
     .ag-slider-field,
@@ -378,6 +367,7 @@
         @include ag-card();
         overflow: hidden;
         text-overflow: ellipsis;
+        z-index: 10;
         @include ag-border(secondary);
         @include ag-color-property(color, secondary-foreground-color);
         height: ag-param(header-height) !important;
@@ -440,20 +430,14 @@
         @include ag-border(primary);
         border-radius: ag-param(card-radius);
         transition: opacity 1s;
-        white-space: normal;
-        &.ag-tooltip-hiding {
-            opacity: 0;
-        }
-    }
 
-    .ag-tooltip-custom {
-        transition: opacity 1s;
         &.ag-tooltip-hiding {
             opacity: 0;
         }
     }
 
     // Column select
+
     @for $i from 1 to 10 {
         .ag-column-select-indent-#{$i} {
             @include ag-theme-rtl((padding-left: $i * ag-param(column-select-indent-size)));
@@ -480,8 +464,9 @@
     }
 
     @include ag-keyboard-focus((
-        ag-column-select-virtual-list-item
-    ), 1px);
+        ag-column-select-column-group,
+        ag-column-select-column
+    ), ag-param(grid-size) / -2);
 
     .ag-column-select-column-group,
     .ag-column-select-column {
@@ -502,12 +487,8 @@
         @include ag-theme-rtl(( margin-left: ag-param(icon-size) + ag-param(grid-size) * 2 ));
     }
 
-    .ag-column-select-virtual-list-viewport {
-        padding: (ag-param(widget-container-vertical-padding) * 0.5) 0px;
-    }
-
-    .ag-column-select-virtual-list-item {
-        padding: 0 ag-param(widget-container-horizontal-padding);
+    .ag-column-select-list {
+        padding: ag-param(widget-container-vertical-padding) ag-param(widget-container-horizontal-padding);
     }
 }
 
@@ -637,7 +618,7 @@
     width: ag-param(toggle-button-width);
     height: ag-param(toggle-button-height);
     @include ag-color-property(background-color, toggle-button-off-background-color);
-    border-radius: ag-param(toggle-button-height) * 0.5;
+    border-radius: ag-param(toggle-button-height) / 2;
     position: relative;
     flex: none;
     border: $border-width solid;
@@ -673,7 +654,7 @@
         height: ag-param(toggle-button-height);
         width: ag-param(toggle-button-height);
         @include ag-color-property(background-color, toggle-button-switch-background-color);
-        border-radius: ag-param(toggle-button-height) * 0.5;
+        border-radius: ag-param(toggle-button-height) / 2;
         transition: left 100ms;
         border: $border-width solid;
         @include ag-color-property(border-color, toggle-button-switch-border-color);

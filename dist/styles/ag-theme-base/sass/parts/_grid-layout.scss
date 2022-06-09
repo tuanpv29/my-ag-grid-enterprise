@@ -9,8 +9,8 @@
         @include ag-border(primary);
     }
     
-    // support 100 levels here because row group indentation is used for tree data which can be quite deep
-    @for $i from 1 to 100 {
+    // support 20 levels here because row group indentation is used for tree data which can be quite deep
+    @for $i from 1 to 20 {
         .ag-row > .ag-cell-wrapper.ag-row-group-indent-#{$i} {
             @include ag-theme-rtl(( padding-left: ag-param(cell-horizontal-padding) + $i * ag-param(row-group-indent-size) ));
         }
@@ -19,13 +19,13 @@
             @include ag-theme-rtl(( padding-left: $i * ag-param(row-group-indent-size) ));
         }
 
-        .ag-row-level-#{$i} .ag-pivot-leaf-group {
+        .ag-row-level-#{$i} .ag-row-group-leaf-indent {
             @include ag-theme-rtl(( margin-left: ag-param(row-group-indent-size) ));
         }
     }
 
-    .ag-row-group-leaf-indent {
-        @include ag-theme-rtl(( margin-left: ag-param(row-group-indent-size) ));
+    .ag-cell {
+        -webkit-font-smoothing: subpixel-antialiased;
     }
 
     .ag-value-change-delta {
@@ -77,7 +77,12 @@
             border-width: 1px;
             @include ag-color-property(border-color, row-border-color);
 
-            border-bottom-style: solid;
+            &:not(.ag-row-first) {
+                border-top-style: solid;
+            }
+            &.ag-row-last {
+                border-bottom-style: solid;
+            }
         }
     }
 
@@ -107,14 +112,11 @@
     }
 
     // NOTE: these don't need an RTL version because the "left spacer" is always the one visually on the left
-    .ag-body-horizontal-scroll:not(.ag-scrollbar-invisible) {
-        .ag-horizontal-left-spacer:not(.ag-scroller-corner) {
-            @include ag-border(critical, right);
-        }
-
-        .ag-horizontal-right-spacer:not(.ag-scroller-corner) {
-            @include ag-border(critical, left);
-        }
+    .ag-horizontal-left-spacer:not(.ag-scroller-corner) {
+        @include ag-border(critical, right);
+    }
+    .ag-horizontal-right-spacer:not(.ag-scroller-corner) {
+        @include ag-border(critical, left);
     }
 
     .ag-row-hover {
@@ -123,31 +125,22 @@
         }
     }
 
-    .ag-column-hover {
-        @if ag-param-is-set(column-hover-color) {
-            @include ag-color-property(background-color, column-hover-color);
-        }
-    }
-
     .ag-right-aligned-cell {
         @include ag-theme-rtl(( text-align: right ));
     }
 
     // right-align numeric values in cells with wrappers
-    .ag-right-aligned-cell .ag-cell-value,
-    .ag-right-aligned-cell .ag-group-value {
+    .ag-right-aligned-cell .ag-cell-value {
         @include ag-theme-rtl(( margin-left: auto ));
     }
 
-    .ag-cell, .ag-full-width-row .ag-cell-wrapper.ag-row-group {
+    .ag-cell {
         // draw a transparent border so that the cell size doesn't change when we add a range border
         border: 1px solid transparent;
         // adjust for transparent border
-        // Needed to capitalize min, because it clashes with old versions of Sass
-        line-height: Min(var(--ag-line-height, ag-param(row-height) - 2px), ag-param(row-height) - 2px);
+        line-height: ag-param(row-height) - 2px;
         padding-left: ag-param(cell-horizontal-padding) - 1px;
         padding-right: ag-param(cell-horizontal-padding) - 1px;
-        -webkit-font-smoothing: subpixel-antialiased;
     }
 
     // in full width rows, a cell renderer is rendered directly into a row with no cell in between,
@@ -159,6 +152,9 @@
 
     .ag-row-dragging {
         cursor: move;
+    }
+
+    .ag-row-dragging {
         opacity: 0.5;
     }
 
@@ -183,12 +179,6 @@
     .ag-details-row {
         padding: ag-param(grid-size) * 5;
         @include ag-color-property(background-color, background-color);
-    }
-
-    .ag-layout-auto-height, .ag-layout-print {
-        .ag-center-cols-clipper, .ag-center-cols-container {
-            min-height: 50px;
-        }
     }
 
     .ag-overlay-loading-wrapper {

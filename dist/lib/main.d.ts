@@ -3,6 +3,4 @@ export { LicenseManager } from "./licenseManager";
 
 export { SetFilterModule } from './setFilterModule';
 export { SetFilter } from './setFilter/setFilter';
-
-export { ExcelExportModule } from "./excelExportModule";
-export { getMultipleSheetsAsExcel, exportMultipleSheetsAsExcel } from './excelExport/excelCreator';
+export { SetFilterModel } from './setFilter/setFilterModel';

@@ -98,12 +98,10 @@
 }
 
 .ag-chart-settings-nav-bar {
-    display: flex;
-    align-items: center;
     width: 100%;
+    display: flex;
     height: 30px;
-    padding: 0 10px;
-    user-select: none;
+    align-items: center;
 }
 
 .ag-chart-settings-card-selector {
@@ -125,7 +123,7 @@
         opacity: 0.2;
     }
 
-    &::before {
+    &:before {
         // make expanded click area
         content: " ";
         display: block;
@@ -196,15 +194,14 @@
     user-select: none;
 }
 
-.ag-chart-data-wrapper {
-    height: 100%;
-    overflow-y: auto;
-}
-
 .ag-chart-data-section,
 .ag-chart-format-section {
     display: flex;
     margin: 0;
+}
+
+.ag-charts-font-panel-controls {
+    justify-content: space-between;
 }
 
 .ag-chart-empty-text {
@@ -226,12 +223,7 @@
     pointer-events: all;
 }
 
-.ag-charts-font-size-color {
-    display: flex;
-    align-self: stretch;
-    justify-content: space-between;
-}
-
-.ag-charts-data-group-item {
-    position: relative;
+.ag-chart-settings-nav-bar {
+    padding: 0 10px;
+    user-select: none;
 }

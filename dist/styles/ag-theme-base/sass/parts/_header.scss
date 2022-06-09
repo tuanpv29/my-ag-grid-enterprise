@@ -7,7 +7,6 @@
 
     .ag-header-row {
         @include ag-color-property(color, header-foreground-color);
-        height: ag-param(header-height);
     }
 
     .ag-pinned-right-header {
@@ -16,6 +15,10 @@
 
     .ag-pinned-left-header {
         @include ag-border(critical, right);
+    }
+
+    .ag-header-row {
+        height: ag-param(header-height);
     }
 
     .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon {
@@ -78,7 +81,7 @@
             display: block;
             width: ag-param(header-column-separator-width);
             height: ag-param(header-column-separator-height);
-            top: calc(50% - #{ag-param(header-column-separator-height) * 0.5});
+            top: calc(50% - #{ag-param(header-column-separator-height) / 2});
             @include ag-color-property(background-color, header-column-separator-color);
 
             @include ag-theme-rtl(( right: 0 ));
@@ -96,10 +99,10 @@
             position: absolute;
             z-index: 1;
             display: block;
-            left: calc(50% - #{ag-param(header-column-resize-handle-width) * 0.5});
+            left: calc(50% - #{ag-param(header-column-resize-handle-width) / 2});
             width: ag-param(header-column-resize-handle-width);
             height: ag-param(header-column-resize-handle-height);
-            top: calc(50% - #{ag-param(header-column-resize-handle-height) * 0.5});
+            top: calc(50% - #{ag-param(header-column-resize-handle-height) / 2});
             @include ag-color-property(background-color, header-column-resize-handle-color);
         }
 
