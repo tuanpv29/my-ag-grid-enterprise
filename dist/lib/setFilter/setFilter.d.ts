@@ -1,7 +1,6 @@
-import { IDoesFilterPassParams, ISetFilterParams, ProvidedFilter, IAfterGuiAttachedParams, Promise } from 'ag-grid-community';
+import { IDoesFilterPassParams, ISetFilterParams, ProvidedFilter, IAfterGuiAttachedParams, AgPromise, ISetFilter, SetFilterModel } from 'ag-grid-community';
 import { SetValueModel } from './setValueModel';
-import { SetFilterModel } from './setFilterModel';
-export declare class SetFilter extends ProvidedFilter {
+export declare class SetFilter<V> extends ProvidedFilter<SetFilterModel, V> implements ISetFilter {
     static SELECT_ALL_VALUE: string;
     private readonly eMiniFilter;
     private readonly eFilterLoading;
@@ -11,28 +10,28 @@ export declare class SetFilter extends ProvidedFilter {
     private valueModel;
     private setFilterParams;
     private virtualList;
+    private positionableFeature;
+    private caseSensitive;
     private appliedModelValues;
     constructor();
+    protected postConstruct(): void;
     protected updateUiVisibility(): void;
     protected createBodyTemplate(): string;
     protected handleKeyDown(e: KeyboardEvent): void;
     private handleKeySpace;
     private handleKeyEnter;
     protected getCssIdentifier(): string;
-    protected resetUiToDefaults(): Promise<void>;
-    protected setModelIntoUi(model: SetFilterModel): Promise<void>;
+    private setModelAndRefresh;
+    protected resetUiToDefaults(): AgPromise<void>;
+    protected setModelIntoUi(model: SetFilterModel | null): AgPromise<void>;
     getModelFromUi(): SetFilterModel | null;
-    getModel(): SetFilterModel;
-    getFilterType(): string;
-    getValueModel(): SetValueModel;
+    getFilterType(): 'set';
+    getValueModel(): SetValueModel | null;
     protected areModelsEqual(a: SetFilterModel, b: SetFilterModel): boolean;
     setParams(params: ISetFilterParams): void;
     private applyExcelModeOptions;
-    private checkSetFilterDeprecatedParams;
     private addEventListenersForDataChanges;
     private syncAfterDataChange;
-    /** @deprecated since version 23.2. The loading screen is displayed automatically when the set filter is retrieving values. */
-    setLoading(loading: boolean): void;
     private showOrHideLoadingScreen;
     private initialiseFilterBodyUi;
     private initVirtualList;
@@ -65,30 +64,13 @@ export declare class SetFilter extends ProvidedFilter {
     private focusRowIfAlive;
     private onSelectAll;
     private onItemSelected;
-    setMiniFilter(newMiniFilter: string): void;
-    getMiniFilter(): string;
-    /** @deprecated since version 23.2. Please use setModel instead. */
-    selectEverything(): void;
-    /** @deprecated since version 23.2. Please use setModel instead. */
-    selectNothing(): void;
-    /** @deprecated since version 23.2. Please use setModel instead. */
-    unselectValue(value: string): void;
-    /** @deprecated since version 23.2. Please use setModel instead. */
-    selectValue(value: string): void;
+    setMiniFilter(newMiniFilter: string | null): void;
+    getMiniFilter(): string | null;
     private refresh;
-    /** @deprecated since version 23.2. Please use getModel instead. */
-    isValueSelected(value: string): boolean;
-    /** @deprecated since version 23.2. Please use getModel instead. */
-    isEverythingSelected(): boolean;
-    /** @deprecated since version 23.2. Please use getModel instead. */
-    isNothingSelected(): boolean;
-    /** @deprecated since version 23.2. Please use getValues instead. */
-    getUniqueValueCount(): number;
-    /** @deprecated since version 23.2. Please use getValues instead. */
-    getUniqueValue(index: any): string;
-    getValues(): string[];
+    getValues(): (string | null)[];
     refreshVirtualList(): void;
     private translateForSetFilter;
     private isSelectAllSelected;
     destroy(): void;
+    private caseFormat;
 }

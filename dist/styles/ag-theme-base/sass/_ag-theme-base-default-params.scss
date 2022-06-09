@@ -50,6 +50,9 @@ $ag-theme-base-default-params: (
     // Background color when hovering over rows in the grid and in dropdown menus, or null for no rollover effect (note - if you want a rollover on one but not the other, set to null and use CSS to achieve the rollover)
     row-hover-color: null,
 
+    // Background color when hovering over columns in the grid
+    column-hover-color: null,
+
     // Color to draw around selected cell ranges
     range-selection-border-color: ag-derived(foreground-color),
 
@@ -114,6 +117,8 @@ $ag-theme-base-default-params: (
     // Draw borders around sidebar tabs so that the active tab appears connected to the current tool panel
     borders-side-button: ag-derived(borders),
 
+    side-bar-panel-width: 200px,
+
     border-radius: 0px,
 
     // Colour for border around major UI components like the grid itself, headers, footers and tool panels
@@ -148,6 +153,7 @@ $ag-theme-base-default-params: (
     suppress-native-widget-styling: false,
     
     input-border-color: null,
+    input-border-color-invalid: null,
     input-disabled-border-color: ag-derived(input-border-color, $opacity: 0.3),
     input-disabled-background-color: null,
 
@@ -191,7 +197,7 @@ $ag-theme-base-default-params: (
     // These 4 variables set the padding around and spacing between widgets in "widget containers" which are parts of the UI that contain many related widgets, like the set filter menu, charts settings tabs etc.
     widget-container-horizontal-padding: ag-derived(grid-size, $times: 1.5),
     widget-container-vertical-padding: ag-derived(grid-size, $times: 1.5),
-    widget-horizontal-spacing: ag-derived(grid-size, $times: 1.5),
+    widget-horizontal-spacing: ag-derived(grid-size, $times: 2),
     widget-vertical-spacing: ag-derived(grid-size),
 
     // Horizontal padding for grid and header cells (vertical padding is not set explicitly, but inferred from row-height / header-height
@@ -220,6 +226,8 @@ $ag-theme-base-default-params: (
 
     // Cause tabs to stretch across the full width of the tab panel header
     full-width-tabs: false,
+    tab-min-width: 220px,
+    menu-min-width: 181px,
 
     // Fonts
     font-family: ("Helvetica Neue", sans-serif),
