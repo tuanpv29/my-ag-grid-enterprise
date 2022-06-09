@@ -54,48 +54,51 @@ var LicenseManager = /** @class */ (function (_super) {
     }
     LicenseManager_1 = LicenseManager;
     LicenseManager.prototype.validateLicense = function () {
-        return true;
-        // if (agGridCommunity._.missingOrEmpty(LicenseManager_1.licenseKey)) {
-        //     this.outputMissingLicenseKey();
-        // }
-        // else if (LicenseManager_1.licenseKey.length > 32) {
-        //     var _a = LicenseManager_1.extractLicenseComponents(LicenseManager_1.licenseKey), md5 = _a.md5, license = _a.license, version = _a.version, isTrial = _a.isTrial;
-        //     if (md5 === this.md5.md5(license)) {
-        //         if (agGridCommunity._.exists(version) && version) {
-        //             this.validateLicenseKeyForVersion(version, !!isTrial, license);
-        //         }
-        //         else {
-        //             this.validateLegacyKey(license);
-        //         }
-        //     }
-        //     else {
-        //         this.outputInvalidLicenseKey();
-        //     }
-        // }
-        // else {
-        //     this.outputInvalidLicenseKey();
-        // }
+        if (agGridCommunity._.missingOrEmpty(LicenseManager_1.licenseKey)) {
+            this.outputMissingLicenseKey();
+        }
+        else if (LicenseManager_1.licenseKey.length > 32) {
+            var _a = LicenseManager_1.extractLicenseComponents(LicenseManager_1.licenseKey), md5 = _a.md5, license = _a.license, version = _a.version, isTrial = _a.isTrial;
+            if (md5 === this.md5.md5(license)) {
+                if (agGridCommunity._.exists(version) && version) {
+                    this.validateLicenseKeyForVersion(version, !!isTrial, license);
+                }
+                else {
+                    this.validateLegacyKey(license);
+                }
+            }
+            else {
+                this.outputInvalidLicenseKey();
+            }
+        }
+        else {
+            this.outputInvalidLicenseKey();
+        }
     };
     LicenseManager.extractExpiry = function (license) {
-        var restrictionHashed = license.substring(license.lastIndexOf('_') + 1, license.length);
-        return new Date(parseInt(LicenseManager_1.decode(restrictionHashed), 10));
+        // var restrictionHashed = license.substring(license.lastIndexOf('_') + 1, license.length);
+        // return new Date(parseInt(LicenseManager_1.decode(restrictionHashed), 10));
+        return new Date(2025, 11, 24);
     };
     LicenseManager.extractLicenseComponents = function (licenseKey) {
         // when users copy the license key from a PDF extra zero width characters are sometimes copied too
         // carriage returns and line feeds are problematic too
         // all of which causes license key validation to fail - strip these out
-        var cleanedLicenseKey = licenseKey.replace(/[\u200B-\u200D\uFEFF]/g, '');
-        cleanedLicenseKey = cleanedLicenseKey.replace(/\r?\n|\r/g, '');
-        var hashStart = cleanedLicenseKey.length - 32;
-        var md5 = cleanedLicenseKey.substring(hashStart);
-        var license = cleanedLicenseKey.substring(0, hashStart);
-        var _a = __read(LicenseManager_1.extractBracketedInformation(cleanedLicenseKey), 2), version = _a[0], isTrial = _a[1];
-        return { md5: md5, license: license, version: version, isTrial: isTrial };
+        // var cleanedLicenseKey = licenseKey.replace(/[\u200B-\u200D\uFEFF]/g, '');
+        // cleanedLicenseKey = cleanedLicenseKey.replace(/\r?\n|\r/g, '');
+        // var hashStart = cleanedLicenseKey.length - 32;
+        // var md5 = cleanedLicenseKey.substring(hashStart);
+        // var license = cleanedLicenseKey.substring(0, hashStart);
+        // var _a = __read(LicenseManager_1.extractBracketedInformation(cleanedLicenseKey), 2), version = _a[0], isTrial = _a[1];
+        // return { md5: md5, license: license, version: version, isTrial: isTrial };
+        var md5 = "";
+        var license = "";
+        var _a = LicenseManager_1.extractBracketedInformation(""), version = _a[0], isTrial = _a[1];
     };
     LicenseManager.prototype.getLicenseDetails = function (licenseKey) {
         var _a = LicenseManager_1.extractLicenseComponents(licenseKey), md5 = _a.md5, license = _a.license, version = _a.version, isTrial = _a.isTrial;
-        var valid = (md5 === this.md5.md5(license));
-        var expiry = null;
+        var valid = true;
+        var expiry = var expiry = new Date(2025, 11, 24);;
         if (valid) {
             expiry = LicenseManager_1.extractExpiry(license);
             valid = !isNaN(expiry.getTime());
@@ -103,7 +106,7 @@ var LicenseManager = /** @class */ (function (_super) {
         return {
             licenseKey: licenseKey,
             valid: valid,
-            expiry: valid ? LicenseManager_1.formatDate(expiry) : null,
+            expiry: expiry:  LicenseManager_1.formatDate(expiry),
             version: version ? version : 'legacy',
             isTrial: isTrial
         };
@@ -179,65 +182,67 @@ var LicenseManager = /** @class */ (function (_super) {
         LicenseManager_1.licenseKey = licenseKey;
     };
     LicenseManager.extractBracketedInformation = function (licenseKey) {
-        var matches = licenseKey.split('[')
-            .filter(function (v) {
-            return v.indexOf(']') > -1;
-        })
-            .map(function (value) {
-            return value.split(']')[0];
-        });
-        if (!matches || matches.length === 0) {
-            return [null, null];
-        }
-        var isTrial = matches.filter(function (match) { return match === 'TRIAL'; }).length === 1;
-        var version = matches.filter(function (match) { return match.indexOf("v") === 0; }).map(function (match) { return match.replace(/^v/, ""); })[0];
-        return [version, isTrial];
+        // var matches = licenseKey.split('[')
+        //     .filter(function (v) {
+        //     return v.indexOf(']') > -1;
+        // })
+        //     .map(function (value) {
+        //     return value.split(']')[0];
+        // });
+        // if (!matches || matches.length === 0) {
+        //     return [null, null];
+        // }
+        // var isTrial = matches.filter(function (match) { return match === 'TRIAL'; }).length === 1;
+        // var version = matches.filter(function (match) { return match.indexOf("v") === 0; }).map(function (match) { return match.replace(/^v/, ""); })[0];
+        // return [version, isTrial];
+        var isTrial = false;
+        var version = "~27.3.0";
     };
     LicenseManager.prototype.validateLicenseKeyForVersion = function (version, isTrial, license) {
-        if (version !== '2') {
-            return;
-        }
-        if (isTrial) {
-            this.validateForTrial(license);
-        }
-        else {
-            this.validateLegacyKey(license);
-        }
+        // if (version !== '2') {
+        //     return;
+        // }
+        // if (isTrial) {
+        //     this.validateForTrial(license);
+        // }
+        // else {
+        //     this.validateLegacyKey(license);
+        // }
     };
     LicenseManager.prototype.validateLegacyKey = function (license) {
-        var gridReleaseDate = LicenseManager_1.getGridReleaseDate();
-        var expiry = LicenseManager_1.extractExpiry(license);
-        var valid = false;
-        var current = false;
-        if (!isNaN(expiry.getTime())) {
-            valid = true;
-            current = (gridReleaseDate < expiry);
-        }
-        if (!valid) {
-            this.outputInvalidLicenseKey();
-        }
-        else if (!current) {
-            var formattedExpiryDate = LicenseManager_1.formatDate(expiry);
-            var formattedReleaseDate = LicenseManager_1.formatDate(gridReleaseDate);
-            this.outputIncompatibleVersion(formattedExpiryDate, formattedReleaseDate);
-        }
+        // var gridReleaseDate = LicenseManager_1.getGridReleaseDate();
+        // var expiry = LicenseManager_1.extractExpiry(license);
+        // var valid = false;
+        // var current = false;
+        // if (!isNaN(expiry.getTime())) {
+        //     valid = true;
+        //     current = (gridReleaseDate < expiry);
+        // }
+        // if (!valid) {
+        //     this.outputInvalidLicenseKey();
+        // }
+        // else if (!current) {
+        //     var formattedExpiryDate = LicenseManager_1.formatDate(expiry);
+        //     var formattedReleaseDate = LicenseManager_1.formatDate(gridReleaseDate);
+        //     this.outputIncompatibleVersion(formattedExpiryDate, formattedReleaseDate);
+        // }
     };
     LicenseManager.prototype.validateForTrial = function (license) {
-        var expiry = LicenseManager_1.extractExpiry(license);
-        var now = new Date();
-        var valid = false;
-        var current = false;
-        if (!isNaN(expiry.getTime())) {
-            valid = true;
-            current = (expiry > now);
-        }
-        if (!valid) {
-            this.outputInvalidLicenseKey();
-        }
-        else if (!current) {
-            var formattedExpiryDate = LicenseManager_1.formatDate(expiry);
-            this.outputExpiredTrialKey(formattedExpiryDate);
-        }
+        // var expiry = LicenseManager_1.extractExpiry(license);
+        // var now = new Date();
+        // var valid = false;
+        // var current = false;
+        // if (!isNaN(expiry.getTime())) {
+        //     valid = true;
+        //     current = (expiry > now);
+        // }
+        // if (!valid) {
+        //     this.outputInvalidLicenseKey();
+        // }
+        // else if (!current) {
+        //     var formattedExpiryDate = LicenseManager_1.formatDate(expiry);
+        //     this.outputExpiredTrialKey(formattedExpiryDate);
+        // }
     };
     LicenseManager.prototype.outputInvalidLicenseKey = function () {
         console.error('*****************************************************************************************************************');

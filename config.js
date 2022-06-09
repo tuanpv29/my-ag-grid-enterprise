@@ -22,13 +22,13 @@ const builds = {
         env: 'development',
         banner
     },
-    'enterprise-cjs-prod': {
-        entry: path.resolve(__dirname, './src/main.ts'),
-        dest: path.resolve(__dirname, './dist/ag-grid-enterprise.cjs.min.js'),
-        format: 'cjs',
-        env: 'production',
-        banner
-    }
+    // 'enterprise-cjs-prod': {
+    //     entry: path.resolve(__dirname, './src/main.ts'),
+    //     dest: path.resolve(__dirname, './dist/ag-grid-enterprise.cjs.min.js'),
+    //     format: 'cjs',
+    //     env: 'production',
+    //     banner
+    // }
 };
 
 function genConfig(name) {
