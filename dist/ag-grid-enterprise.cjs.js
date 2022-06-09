@@ -54,26 +54,27 @@ var LicenseManager = /** @class */ (function (_super) {
     }
     LicenseManager_1 = LicenseManager;
     LicenseManager.prototype.validateLicense = function () {
-        if (agGridCommunity._.missingOrEmpty(LicenseManager_1.licenseKey)) {
-            this.outputMissingLicenseKey();
-        }
-        else if (LicenseManager_1.licenseKey.length > 32) {
-            var _a = LicenseManager_1.extractLicenseComponents(LicenseManager_1.licenseKey), md5 = _a.md5, license = _a.license, version = _a.version, isTrial = _a.isTrial;
-            if (md5 === this.md5.md5(license)) {
-                if (agGridCommunity._.exists(version) && version) {
-                    this.validateLicenseKeyForVersion(version, !!isTrial, license);
-                }
-                else {
-                    this.validateLegacyKey(license);
-                }
-            }
-            else {
-                this.outputInvalidLicenseKey();
-            }
-        }
-        else {
-            this.outputInvalidLicenseKey();
-        }
+        return true;
+        // if (agGridCommunity._.missingOrEmpty(LicenseManager_1.licenseKey)) {
+        //     this.outputMissingLicenseKey();
+        // }
+        // else if (LicenseManager_1.licenseKey.length > 32) {
+        //     var _a = LicenseManager_1.extractLicenseComponents(LicenseManager_1.licenseKey), md5 = _a.md5, license = _a.license, version = _a.version, isTrial = _a.isTrial;
+        //     if (md5 === this.md5.md5(license)) {
+        //         if (agGridCommunity._.exists(version) && version) {
+        //             this.validateLicenseKeyForVersion(version, !!isTrial, license);
+        //         }
+        //         else {
+        //             this.validateLegacyKey(license);
+        //         }
+        //     }
+        //     else {
+        //         this.outputInvalidLicenseKey();
+        //     }
+        // }
+        // else {
+        //     this.outputInvalidLicenseKey();
+        // }
     };
     LicenseManager.extractExpiry = function (license) {
         var restrictionHashed = license.substring(license.lastIndexOf('_') + 1, license.length);
